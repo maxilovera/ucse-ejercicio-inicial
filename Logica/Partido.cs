@@ -31,13 +31,21 @@ namespace Logica
 
         public void AgregarIncidencia(Tarjeta tarjeta)
         {
-            Tarjeta tarjetaPrevia = Tarjetas.Find(x => x.JugadorAfectado.Equipo.Nombre == tarjeta.JugadorAfectado.Equipo.Nombre &&
-                                                        x.JugadorAfectado.Numero == tarjeta.JugadorAfectado.Numero &
-                                                        tarjeta.Color == ColorTarjeta.Amarilla);
+            Tarjeta tarjetaPrevia = ObtenerIncidenciaPrevia(tarjeta);
 
             if (tarjetaPrevia != null) {
                 tarjeta.TarjetaAsociada = tarjetaPrevia;
             }
+
+            this.Tarjetas.Add(tarjeta);
+        }
+
+        //Opcion para agregar incidencia
+        private Tarjeta ObtenerIncidenciaPrevia(Tarjeta tarjeta)
+        {
+            return Tarjetas.Find(x => x.JugadorAfectado.Equipo.Nombre == tarjeta.JugadorAfectado.Equipo.Nombre &&
+                                                        x.JugadorAfectado.Numero == tarjeta.JugadorAfectado.Numero &
+                                                        tarjeta.Color == ColorTarjeta.Amarilla);
         }
 
         public List<string> ObtenerListadoIncidencias()
@@ -45,10 +53,12 @@ namespace Logica
             List<string> listadoDescripcionesIncidencias = new List<string>();
             List<Incidencia> incidencias = new List<Incidencia>();
 
+            //Polimorfismo (por abstraccion)
             incidencias.AddRange(Goles);
             incidencias.AddRange(Tarjetas);
             incidencias.AddRange(Cambios);
-            incidencias = incidencias.OrderBy(x => x.MinutoDeJuego).ToList();
+
+            incidencias = incidencias.OrderBy(x => x.MinutoDeJuego).ToList(); //expresiones lambda de ordenamiento
 
             foreach (Incidencia incidencia in incidencias)
             {

@@ -7,7 +7,7 @@
 
         public override string ObtenerDescripcionIncidencia()
         {
-            return $"Cambio {this.JugadorSaliente.Nombre} x {this.JugadorEntrante.Nombre} - {this.MinutoDeJuego}'";
+            return $"Cambio {this.JugadorEntrante.Nombre} x {this.JugadorSaliente.Nombre} - {this.MinutoDeJuego}'";
         }
     }
 }

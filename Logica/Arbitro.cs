@@ -8,11 +8,13 @@ namespace Logica
 {
     public class Arbitro : Persona
     {
+        public int PartidosJugados { get; set; }
         public TipoArbitro TipoArbitro { get; set; }
 
         public override bool ProximaARetiro()
         {
-            return Edad >= (Constantes.EdadRetiro - 2) || Edad <= (Constantes.EdadRetiro + 2);
+            return Edad >= (Constantes.EdadRetiro - 2) 
+                || Edad <= (Constantes.EdadRetiro + 2);
         }
     }
 }

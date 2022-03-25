@@ -10,9 +10,12 @@ namespace Logica
     {
         public List<Partido> Partidos { get; set; }
 
+        //Punto 6
         public bool NuevoPartido(Arbitro arbitro, string ciudad, Equipo equipoLocal, Equipo equipoVisitante)
         {
             List<Arbitro> arbitros = new List<Arbitro>();
+            arbitro.PartidosJugados++;
+
             arbitros.Add(arbitro);
 
             Partido nuevoPartido = new Partido()
@@ -21,7 +24,7 @@ namespace Logica
                 Ciudad = ciudad,
                 EquipoLocal = equipoLocal,
                 EquipoVisitante = equipoVisitante
-            };
+            };            
 
             this.Partidos.Add(nuevoPartido);
 
