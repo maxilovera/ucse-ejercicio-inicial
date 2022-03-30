@@ -6,18 +6,40 @@ using System.Threading.Tasks;
 
 namespace Logica
 {
-    public class Partido 
+    public class Partido
     {
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
-        public string Ciudad { get; set; }
+        public string Ciudad { get; private set; }
         public DateTime InicioPartido { get; set; }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get; set; }
+        public short? TiempoDeJuego 
+        {
+            get 
+            {
+                return ObtenerUltimoMinuto();
+            }
+        }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
+
+        public Partido(){}
+        ~Partido()
+        {
+            this.Cambios.Clear();
+            this.Tarjetas.Clear();
+            this.Goles.Clear();
+            this.Arbitros.Clear();
+        }
+        public Partido(List<Arbitro> arbitros, string ciudad, Equipo equipoLocal, Equipo equipoVisitante)
+        {
+            this.Ciudad = ciudad;
+            this.Arbitros = arbitros;
+            this.EquipoLocal = equipoLocal;
+            this.EquipoVisitante = equipoVisitante;
+        }
 
         public void AgregarIncidencia(Gol gol)
         {
@@ -77,6 +99,20 @@ namespace Logica
             resumenPartido.GolesVisitante = this.Goles.Count(x => x.EsArcoLocal);
 
             return resumenPartido;
+        }
+        public short ObtenerUltimoMinuto()
+        {
+            short UltimoMinuto = 0;
+            List<Incidencia> incidencias = new List<Incidencia>();
+
+            incidencias.AddRange(Goles);
+            incidencias.AddRange(Tarjetas);
+            incidencias.AddRange(Cambios);
+            foreach (Incidencia incidencia in incidencias)
+            {
+                if (incidencia.MinutoDeJuego > UltimoMinuto) { UltimoMinuto = incidencia.MinutoDeJuego; }
+            }
+            return UltimoMinuto;
         }
     }
 }
