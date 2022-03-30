@@ -9,7 +9,7 @@ namespace Logica
     public class Persona
     {
         public string Nombre { get; set; }
-        public int Edad
+        public Nullable<int> Edad
         {
             get
             {
@@ -48,7 +48,14 @@ namespace Logica
         //Punto 5
         public virtual bool ProximaARetiro()
         {
-            return false;
+            if (Edad.HasValue)
+            {
+                return false;
+            }
+            else
+            {
+                throw new Exception("Edad es null");
+            }
         }
     }
 }
