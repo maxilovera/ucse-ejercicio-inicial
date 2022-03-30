@@ -10,12 +10,32 @@ namespace Logica
     {
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
-        public string Ciudad { get; set; }
-        public DateTime InicioPartido { get; set; }
+        public string Ciudad { get; private set; }
+        public DateTime? InicioPartido
+        {
+            get
+            {
+                return InicioPartido.Value;
+            }
+            set
+            {
+                if (value is null)
+                {
+                    InicioPartido = DateTime.Today;
+                }
+            }
+        }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get; set; }
+        public short TiempoDeJuego 
+        {
+            get
+            {
+               return AgregarListas(Goles, Tarjetas, Cambios).OrderBy(x => x.MinutoDeJuego).ToList().Last().MinutoDeJuego;
+                
+            }
+        }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
 
@@ -51,13 +71,9 @@ namespace Logica
         public List<string> ObtenerListadoIncidencias()
         {
             List<string> listadoDescripcionesIncidencias = new List<string>();
-            List<Incidencia> incidencias = new List<Incidencia>();
 
-            //Polimorfismo (por abstraccion)
-            incidencias.AddRange(Goles);
-            incidencias.AddRange(Tarjetas);
-            incidencias.AddRange(Cambios);
-
+            List<Incidencia> incidencias = AgregarListas(Goles, Tarjetas, Cambios);
+           
             incidencias = incidencias.OrderBy(x => x.MinutoDeJuego).ToList(); //expresiones lambda de ordenamiento
 
             foreach (Incidencia incidencia in incidencias)
@@ -77,6 +93,28 @@ namespace Logica
             resumenPartido.GolesVisitante = this.Goles.Count(x => x.EsArcoLocal);
 
             return resumenPartido;
+        }
+
+        public void SetCiudad(string ciudad)
+        {
+            Ciudad = ciudad;
+        }
+
+        ~Partido()
+        {
+            Goles.Clear();
+            Arbitros.Clear();
+            Tarjetas.Clear();
+            Cambios.Clear();
+        }
+
+        private List<Incidencia> AgregarListas(List<Gol> goles, List<Tarjeta> tarjetas, List<Cambio> cambios)
+        {
+            List<Incidencia> lista = new List<Incidencia>();
+            lista.AddRange(goles);
+            lista.AddRange(tarjetas);
+            lista.AddRange(cambios);
+            return lista;
         }
     }
 }
