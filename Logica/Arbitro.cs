@@ -13,6 +13,24 @@ namespace Logica
 
         public override bool ProximaARetiro()
         {
+
+            int? valor = null;
+            try
+            {
+                valor = Edad; 
+            }
+            catch (Exception e)
+            {
+                valor = null;
+            }
+            finally
+            {
+                if (valor == null)
+                {
+                    throw new Exception("No se seteo la edad de la persona");
+                }             
+            }
+
             return Edad >= (Constantes.EdadRetiro - 2) 
                 || Edad <= (Constantes.EdadRetiro + 2);
         }

@@ -32,7 +32,7 @@ namespace PartidoDeFutbol
             Persona persona = new Persona();
             persona.FechaNacimiento = new DateTime(1987, 5, 14);            
 
-            int edad = persona.Edad;
+            int? edad = persona.Edad;
 
             int numero1 = int.Parse(Console.ReadLine());
             int numero2 = int.Parse(Console.ReadLine());

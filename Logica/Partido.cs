@@ -10,15 +10,54 @@ namespace Logica
     {
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
-        public string Ciudad { get; set; }
+        public string Ciudad { get; private set; }
         public DateTime InicioPartido { get; set; }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get; set; }
+        //Primier nulleable, puede ser que el partido este recien empezado osea TiempoDeJugo = 0, o que nunca emepezo TiempoDeJuego = null
+        public Nullable<short> TiempoDeJuego 
+        {
+            get 
+            {
+                return TiempoDeJuego;
+            }
+            set 
+            {
+                this.TiempoDeJuego = MinutoDeJuego(CrearListaIncidencias(this.Goles,this.Tarjetas,this.Cambios));
+            } 
+        }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
 
+        public List<Incidencia> CrearListaIncidencias(List<Gol> goles,List<Tarjeta> tarjetas,List<Cambio> cambios)
+        {
+            List<Incidencia> incidencias = new List<Incidencia>();
+            incidencias.AddRange(goles);
+            incidencias.AddRange(cambios);
+            incidencias.AddRange(tarjetas);
+            return incidencias;
+        }
+        public short? MinutoDeJuego(List<Incidencia> incidencias)
+        {
+            short? MinutoActual = null;
+            foreach (Incidencia incidencia in incidencias)
+            {
+                if (incidencia.MinutoDeJuego > MinutoActual || MinutoActual == null)
+                {
+                    MinutoActual = incidencia.MinutoDeJuego;
+                }
+            }
+
+            return MinutoActual;
+        }
+        ~Partido()
+        {
+            this.Arbitros.Clear();
+            this.Cambios.Clear();
+            this.Goles.Clear();
+            this.Tarjetas.Clear();
+        }
         public void AgregarIncidencia(Gol gol)
         {
             this.Goles.Add(gol);
