@@ -8,15 +8,25 @@ namespace Logica
 {
     public class Jugador : Persona
     {
-        public int Numero { get; set; }
-        public bool EsTitular { get; set; }
+        public int? NumeroDeCamiseta { get; set; }
+        public bool? EsTitular { get { return EsTitular; }
+            set
+            {
+                if (NumeroDeCamiseta.HasValue)
+                    if(NumeroDeCamiseta.Value<=11 && NumeroDeCamiseta.Value >= 1)
+                        EsTitular = true;
+                    else
+                        EsTitular=false;
+            } }
         public Equipo Equipo { get; set; }
         public Posicion Posicion { get; set; }
 
         public override bool ProximaARetiro()
         {
-            return Edad >= (Constantes.EdadRetiro - 2) 
-                || Edad <= (Constantes.EdadRetiro + 2);
+            if (Edad.HasValue)
+                return Edad >= (Constantes.EdadRetiro - 2) || Edad <= (Constantes.EdadRetiro + 2);
+            else
+                return false;
         }
     }
 }

@@ -10,15 +10,28 @@ namespace Logica
     {
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
-        public string Ciudad { get; set; }
+        public string Ciudad { get; private set; }
         public DateTime InicioPartido { get; set; }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get; set; }
+        public short TiempoDeJuego { get { return Convert.ToInt16(AgregarYOrdenarIncidencias()[0].MinutoDeJuego); } }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
 
+        ~Partido() //destructor
+        {
+            Goles.Clear();
+            Cambios.Clear();
+            Tarjetas.Clear();
+            Arbitros.Clear();   
+
+        }
+
+        public void setearCiudad(string pCiudad )
+        {
+            Ciudad = pCiudad;
+        }
         public void AgregarIncidencia(Gol gol)
         {
             this.Goles.Add(gol);
@@ -44,13 +57,11 @@ namespace Logica
         private Tarjeta ObtenerIncidenciaPrevia(Tarjeta tarjeta)
         {
             return Tarjetas.Find(x => x.JugadorAfectado.Equipo.Nombre == tarjeta.JugadorAfectado.Equipo.Nombre &&
-                                                        x.JugadorAfectado.Numero == tarjeta.JugadorAfectado.Numero &
+                                                        x.JugadorAfectado.NumeroDeCamiseta == tarjeta.JugadorAfectado.NumeroDeCamiseta &
                                                         tarjeta.Color == ColorTarjeta.Amarilla);
         }
-
-        public List<string> ObtenerListadoIncidencias()
+        private List<Incidencia> AgregarYOrdenarIncidencias()
         {
-            List<string> listadoDescripcionesIncidencias = new List<string>();
             List<Incidencia> incidencias = new List<Incidencia>();
 
             //Polimorfismo (por abstraccion)
@@ -58,9 +69,15 @@ namespace Logica
             incidencias.AddRange(Tarjetas);
             incidencias.AddRange(Cambios);
 
-            incidencias = incidencias.OrderBy(x => x.MinutoDeJuego).ToList(); //expresiones lambda de ordenamiento
+            incidencias = incidencias.OrderBy(x => x.MinutoDeJuego).ToList();
+            return incidencias;
+        }
+        public List<string> ObtenerListadoIncidencias()
+        {
+            List<string> listadoDescripcionesIncidencias = new List<string>();
+             //expresiones lambda de ordenamiento
 
-            foreach (Incidencia incidencia in incidencias)
+            foreach (Incidencia incidencia in AgregarYOrdenarIncidencias())
             {
                 listadoDescripcionesIncidencias.Add(incidencia.ObtenerDescripcionIncidencia());
             }
