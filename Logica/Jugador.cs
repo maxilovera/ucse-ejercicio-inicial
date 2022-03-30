@@ -9,7 +9,19 @@ namespace Logica
     public class Jugador : Persona
     {
         public int Numero { get; set; }
-        public bool EsTitular { get; set; }
+        public bool EsTitular
+        {
+            get
+            {
+                return EsTitular;
+            }
+            set {
+                if (Numero < 12 && Numero > 0 )
+                    EsTitular = true;
+                else
+                    EsTitular = false;
+            } 
+        }
         public Equipo Equipo { get; set; }
         public Posicion Posicion { get; set; }
 
