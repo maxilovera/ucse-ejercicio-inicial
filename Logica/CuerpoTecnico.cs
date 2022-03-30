@@ -9,6 +9,7 @@ namespace Logica
     public class CuerpoTecnico : Persona
     {
         public bool EsTecnicoPrincipal { get; set; }
+        public CuerpoTecnico TecnicoPrincipal { get; set; }
         public int NumeroAyudanteCampo { get; set; }
     }
 }

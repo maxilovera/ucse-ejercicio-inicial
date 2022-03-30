@@ -18,13 +18,7 @@ namespace Logica
 
             arbitros.Add(arbitro);
 
-            Partido nuevoPartido = new Partido()
-            {
-                Arbitros = arbitros,
-                Ciudad = ciudad,
-                EquipoLocal = equipoLocal,
-                EquipoVisitante = equipoVisitante
-            };            
+            Partido nuevoPartido = new Partido(arbitros, ciudad, equipoLocal, equipoVisitante);
 
             this.Partidos.Add(nuevoPartido);
 
