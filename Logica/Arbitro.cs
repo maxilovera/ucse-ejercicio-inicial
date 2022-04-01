@@ -13,8 +13,10 @@ namespace Logica
 
         public override bool ProximaARetiro()
         {
-            return Edad >= (Constantes.EdadRetiro - 2) 
-                || Edad <= (Constantes.EdadRetiro + 2);
+            if (Edad.HasValue)
+                return Edad >= (Constantes.EdadRetiro - 2) || Edad <= (Constantes.EdadRetiro + 2);
+            else
+                return false;
         }
     }
 }
