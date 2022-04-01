@@ -8,8 +8,8 @@ namespace Logica
 {
     public class Jugador : Persona
     {
-        public int Numero { get; set; }
-        public bool? EsTitular 
+        public int? Numero { get; set; }
+        public bool EsTitular 
         {
             get
             {

@@ -11,29 +11,15 @@ namespace Logica
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
         public string Ciudad { get; private set; }
-        public DateTime? InicioPartido
-        {
-            get
-            {
-                return InicioPartido.Value;
-            }
-            set
-            {
-                if (value is null)
-                {
-                    InicioPartido = DateTime.Today;
-                }
-            }
-        }
+        public DateTime InicioPartido { get; set; }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego 
+        public short? TiempoDeJuego 
         {
             get
             {
                return AgregarListas(Goles, Tarjetas, Cambios).OrderBy(x => x.MinutoDeJuego).ToList().Last().MinutoDeJuego;
-                
             }
         }
         public List<Cambio> Cambios { get; set; }
