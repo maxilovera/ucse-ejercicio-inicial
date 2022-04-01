@@ -15,7 +15,7 @@ namespace Logica
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get { return Convert.ToInt16(AgregarYOrdenarIncidencias()[0].MinutoDeJuego); } }
+        public short? TiempoDeJuego {get {return Convert.ToInt16(AgregarYOrdenarIncidencias()[0].MinutoDeJuego); }}
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
 
