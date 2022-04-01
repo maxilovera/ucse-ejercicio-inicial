@@ -32,6 +32,11 @@ namespace Logica
 
         public override bool ProximaARetiro()
         {
+            if (Edad is null)
+            {
+                throw new Exception("No se registra la edad de la persona");
+            }
+
             return Edad >= (Constantes.EdadRetiro - 2) 
                 || Edad <= (Constantes.EdadRetiro + 2);
         }
