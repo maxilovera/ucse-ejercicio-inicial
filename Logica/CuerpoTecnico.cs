@@ -8,7 +8,24 @@ namespace Logica
 {
     public class CuerpoTecnico : Persona
     {
-        public bool EsTecnicoPrincipal { get; set; }
+        public bool? EsTecnicoPrincipal 
+        { 
+            get
+            {
+                return EsTecnicoPrincipal;
+            }
+            set 
+            {
+                if (value is null)
+                {
+                    EsTecnicoPrincipal = false;
+                }
+                else
+                {
+                    EsTecnicoPrincipal = value;
+                }
+            } 
+        }
         public int NumeroAyudanteCampo { get; set; }
     }
 }
