@@ -15,10 +15,7 @@ namespace Logica
             }
             set
             {
-                if (NumeroAyudanteCampo != null)
-                    EsTecnicoPrincipal = false;
-                else
-                    EsTecnicoPrincipal = true;
+                value = NumeroAyudanteCampo != null;
             }
                 }
         public int? NumeroAyudanteCampo { get; set; }

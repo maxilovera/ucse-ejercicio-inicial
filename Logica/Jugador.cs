@@ -16,10 +16,7 @@ namespace Logica
                 return EsTitular;
             }
             set {
-                if (Numero < 12 && Numero > 0 )
-                    EsTitular = true;
-                else
-                    EsTitular = false;
+                value = Numero < 12 && Numero > 0;
             } 
         }
         public Equipo Equipo { get; set; }
