@@ -21,10 +21,11 @@ namespace Logica
             Partido nuevoPartido = new Partido()
             {
                 Arbitros = arbitros,
-                Ciudad = ciudad,
                 EquipoLocal = equipoLocal,
                 EquipoVisitante = equipoVisitante
-            };            
+            };
+
+            nuevoPartido.AgregarCiudad(ciudad);
 
             this.Partidos.Add(nuevoPartido);
 
