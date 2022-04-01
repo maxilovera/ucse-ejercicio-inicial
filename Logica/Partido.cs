@@ -10,18 +10,36 @@ namespace Logica
     {
         //Crear una clase principal para registrar los datos de un partido determinado
         public List<Arbitro> Arbitros { get; set; }
-        public string Ciudad { get; set; }
+        //Punto 3 : es necesario modificar el metodo de crear un partido, ya que
+        //al hacer privado el set solo puedo darle valor desde la clase Partido.
+        public string Ciudad { get; private set; }
         public DateTime InicioPartido { get; set; }
         public Equipo EquipoLocal { get; set; }
         public Equipo EquipoVisitante { get; set; }
         public List<Gol> Goles { get; set; }
-        public short TiempoDeJuego { get; set; }
+        public short TiempoDeJuego { get {return RetornarMinutoJuego();} }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
 
+        public Partido() { }
+        public Partido(List<Arbitro> arbitros, string ciudad, Equipo equipoLocal, Equipo equipoVisitante)
+        {
+            this.Arbitros = arbitros;
+            this.Ciudad = ciudad;
+            this.EquipoLocal = equipoLocal;
+            this.EquipoVisitante = equipoVisitante;
+        }
+        ~Partido()
+        {
+            Arbitros.Clear();
+            Cambios.Clear();
+            Tarjetas.Clear();
+            Goles.Clear();
+        }
         public void AgregarIncidencia(Gol gol)
         {
             this.Goles.Add(gol);
+            
         }
 
         public void AgregarIncidencia(Cambio cambio)
@@ -77,6 +95,33 @@ namespace Logica
             resumenPartido.GolesVisitante = this.Goles.Count(x => x.EsArcoLocal);
 
             return resumenPartido;
+        }
+
+        public short RetornarMinutoJuego()
+        {
+            short minutoJuego = 0;
+            foreach (Cambio cambio in Cambios)
+            {
+                if (cambio.MinutoDeJuego > minutoJuego)
+                {
+                    minutoJuego = cambio.MinutoDeJuego;
+                }
+            }
+            foreach (Tarjeta tarjeta in Tarjetas)
+            {
+                if (tarjeta.MinutoDeJuego > minutoJuego)
+                {
+                    minutoJuego = tarjeta.MinutoDeJuego;
+                }
+            }
+            foreach (Gol gol in Goles)
+            {
+                if (gol.MinutoDeJuego > minutoJuego)
+                {
+                    minutoJuego = gol.MinutoDeJuego;
+                }
+            }
+            return minutoJuego;
         }
     }
 }

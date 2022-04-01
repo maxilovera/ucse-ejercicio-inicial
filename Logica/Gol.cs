@@ -12,7 +12,7 @@ namespace Logica
         public bool EsEnContra { get; set; }
         public bool EsArcoLocal { get; set; }
 
-        public Gol(Jugador jugador, bool esEnContra, int minutoDeJuego, bool esArcoLocal)
+        public Gol(Jugador jugador, bool esEnContra, short minutoDeJuego, bool esArcoLocal)
         {
             this.Jugador = jugador;
             this.EsEnContra = esEnContra;
