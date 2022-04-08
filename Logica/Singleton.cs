@@ -17,9 +17,15 @@ namespace Logica
             get { return _instance; }
         }
 
-        public void EscribirEnConsola(string mensaje)
+        public bool EscribirEnConsola(string mensaje)
         {
-            System.Diagnostics.Debug.WriteLine(mensaje);
+            if (mensaje != "")
+            {
+                System.Diagnostics.Debug.WriteLine(mensaje);
+                return true
+            }
+
+            return false;
         }
     }
 }

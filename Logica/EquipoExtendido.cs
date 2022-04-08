@@ -14,7 +14,7 @@ namespace Logica
         const int porEntrenador = 30000;
         const int porCuerpoTecnico = 10000;
 
-        public void DineroNecesario()
+        public bool DineroNecesario()
         {
             int presupuestoTotal = Jugadores.Count() * porJugador;
 
@@ -24,8 +24,13 @@ namespace Logica
                                          ? presupuestoTotal += porEntrenador
                                          : presupuestoTotal += porCuerpoTecnico;
             }
-            
-            Presupuesto = presupuestoTotal;
+
+            if (presupuestoTotal != null)
+            {
+                Presupuesto = presupuestoTotal;
+                return true;
+            }
+            return false;
         }
     }
 }
