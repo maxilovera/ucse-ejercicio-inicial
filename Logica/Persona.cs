@@ -48,9 +48,9 @@ namespace Logica
         //Punto 5
         public virtual bool ProximaARetiro()
         {
-            if (!Edad.HasValue)
+            if(!Edad.HasValue)
             {
-                throw new Exception("Edad es nula");
+                throw new Exception("Edad con valor nulo");
             }
 
             return false;

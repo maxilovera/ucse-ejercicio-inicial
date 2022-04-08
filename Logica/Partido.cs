@@ -18,16 +18,11 @@ namespace Logica
         public short? TiempoDeJuego {
             get
             {
-                return ObtenerMinutoMasAlto();
+                return ObtenerListas().Last().MinutoDeJuego;
             }
                 }
         public List<Cambio> Cambios { get; set; }
         public List<Tarjeta> Tarjetas { get; set; }
-
-        private short? ObtenerMinutoMasAlto()
-        {
-            return ObtenerListas().Last().MinutoDeJuego;
-        }
 
         public void AgregarCiudad(string ciudad)
         {

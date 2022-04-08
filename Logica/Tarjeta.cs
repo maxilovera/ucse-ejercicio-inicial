@@ -8,7 +8,7 @@ namespace Logica
         public ColorTarjeta Color { get; set; }
         public Tarjeta TarjetaAsociada { get; set; }
 
-        public Tarjeta(Jugador jugador, int minutoDeJuego, ColorTarjeta color, Tarjeta tarjetaAsociada)
+        public Tarjeta(Jugador jugador, short minutoDeJuego, ColorTarjeta color, Tarjeta tarjetaAsociada)
         {
             this.JugadorAfectado = jugador;
             this.MinutoDeJuego = minutoDeJuego;
